@@ -6,6 +6,7 @@ import './App.css'
 import Home from './components/Home'
 import Continent from './components/Continent'
 import CountryDetail from './components/CountryDetail'
+import CountryStatistics from './components/LargestCountries'
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/continent/:continentName" element={<Continent />} />
       <Route path="/country/:countryCode" element={<CountryDetail />} />
+      <Route path="/statistics" element={<CountryStatistics />} />
       {/* 3D Earth stays on Home page for now */}
     </Routes>
   )

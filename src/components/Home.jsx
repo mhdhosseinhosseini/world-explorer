@@ -39,6 +39,25 @@ export default function Home() {
         zIndex: 2
       }}>
         <CountrySearch />
+        <button
+          style={{
+            width: '100%',
+            padding: '14px 18px',
+            borderRadius: 14,
+            border: 'none',
+            background: 'linear-gradient(90deg, #ffb6ea 0%, #b6eaff 100%)',
+            color: '#2d0b4e',
+            fontWeight: 700,
+            fontSize: '1.1rem',
+            marginBottom: 18,
+            cursor: 'pointer',
+            boxShadow: '0 2px 16px #ffb6ea55',
+            outline: 'none',
+          }}
+          onClick={() => navigate('/statistics')}
+        >
+          Country Statistics
+        </button>
         <h1 style={{
           background: 'linear-gradient(90deg, #ffb6ea 0%, #b6eaff 100%)',
           WebkitBackgroundClip: 'text',
