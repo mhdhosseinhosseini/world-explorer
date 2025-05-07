@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import { InteractiveSphere } from './InteractiveSphere'
+import CountrySearch from './CountrySearch'
 
 const continents = [
   { name: 'Africa' },
@@ -37,6 +38,7 @@ export default function Home() {
         padding: '40px 24px',
         zIndex: 2
       }}>
+        <CountrySearch />
         <h1 style={{
           background: 'linear-gradient(90deg, #ffb6ea 0%, #b6eaff 100%)',
           WebkitBackgroundClip: 'text',
