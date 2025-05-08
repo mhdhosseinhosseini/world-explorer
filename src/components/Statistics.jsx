@@ -13,6 +13,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import ThemeToggle from './ThemeToggle';
+import { useTheme } from '../context/ThemeContext';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement, Title, Tooltip, Legend, ChartDataLabels);
 
@@ -45,6 +46,10 @@ export default function Statistics() {
   const [continents, setContinents] = useState([...CONTINENTS]);
   const [totalCountries, setTotalCountries] = useState(null);
   const navigate = useNavigate();
+  const { isDarkMode } = useTheme();
+
+  // Set chart color based on theme
+  const chartTextColor = isDarkMode ? 'rgba(255,255,255,0.87)' : '#213547';
 
   function handleContinentChange(cont, checked) {
     if (cont === 'All') {
@@ -358,7 +363,7 @@ export default function Statistics() {
                 options={{
                   responsive: true,
                   plugins: {
-                    legend: { display: true, labels: { color: 'var(--accent-primary)', font: { weight: 600 } } },
+                    legend: { display: true, labels: { color: chartTextColor } },
                     title: { display: false },
                     tooltip: { callbacks: { label: ctx => `${ctx.label}: ${ctx.parsed.toLocaleString()}` } },
                     datalabels: { display: false },
@@ -373,11 +378,11 @@ export default function Statistics() {
                 options={{
                   responsive: true,
                   plugins: {
-                    legend: { display: true, labels: { color: 'var(--accent-primary)', font: { weight: 600 } } },
+                    legend: { display: true, labels: { color: chartTextColor } },
                     title: { display: false },
                     tooltip: { callbacks: { label: ctx => `${ctx.label}: ${ctx.parsed.toLocaleString()}` } },
                     datalabels: {
-                      color: 'var(--text-primary)',
+                      color: chartTextColor,
                       font: { weight: 'bold', size: 28 },
                       formatter: (value) => value,
                     },
@@ -400,11 +405,11 @@ export default function Statistics() {
                   },
                   scales: {
                     x: {
-                      ticks: { color: 'var(--accent-primary)', font: { weight: 600 } },
+                      ticks: { color: chartTextColor, font: { weight: 600 } },
                       grid: { color: 'var(--accent-primary)22' }
                     },
                     y: {
-                      ticks: { color: 'var(--accent-primary)', font: { weight: 600 } },
+                      ticks: { color: chartTextColor, font: { weight: 600 } },
                       grid: { color: 'var(--accent-primary)22' }
                     }
                   }
