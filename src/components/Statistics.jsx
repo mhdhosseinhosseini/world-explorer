@@ -36,7 +36,7 @@ const REPORTS = [
   { value: 'countries-by-continent', label: 'Number of Countries per Continent' },
 ];
 
-export default function CountryStatistics() {
+export default function Statistics() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [report, setReport] = useState('largest-area');
@@ -270,7 +270,7 @@ export default function CountryStatistics() {
         }}>Go to Home</button>
         <div style={{fontWeight:700, fontSize:18, marginBottom:8, color:'#b6eaff'}}>Continents</div>
         <label style={{display:'flex', alignItems:'center', gap:8, fontWeight:600, color:'#fff'}}>
-          <input type="checkbox" checked={continents.length === CONTINENTS.length} onChange={e => handleContinentChange('All', e.target.checked)} disabled={report === 'pop-by-continent'} /> All
+          <input type="checkbox" checked={continents.length === CONTINENTS.length} onChange={e => handleContinentChange('All', e.target.checked)} disabled={report === 'pop-by-continent' || report === 'countries-by-continent'} /> All
         </label>
         {CONTINENTS.map(cont => (
           <label key={cont} style={{display:'flex', alignItems:'center', gap:8, fontWeight:600, color:'#fff'}}>
@@ -278,7 +278,7 @@ export default function CountryStatistics() {
               type="checkbox"
               checked={continents.includes(cont)}
               onChange={e => handleContinentChange(cont, e.target.checked)}
-              disabled={report === 'pop-by-continent'}
+              disabled={report === 'pop-by-continent' || report === 'countries-by-continent'}
             />
             {cont}
           </label>
