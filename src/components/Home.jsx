@@ -3,6 +3,7 @@ import { Canvas } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import { InteractiveSphere } from './InteractiveSphere'
 import CountrySearch from './CountrySearch'
+import ThemeToggle from './ThemeToggle'
 
 const continents = [
   { name: 'Africa' },
@@ -24,13 +25,13 @@ export default function Home() {
       width: '100vw',
       height: '100vh',
       display: 'flex',
-      background: 'linear-gradient(135deg, #2d0b4e 0%, #1a1446 100%)',
+      background: 'var(--gradient-primary)',
       overflow: 'hidden'
     }}>
       <div style={{
         width: '340px',
         minWidth: '220px',
-        background: 'rgba(10,20,40,0.7)',
+        background: 'var(--sidebar-bg)',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'flex-start',
@@ -38,6 +39,16 @@ export default function Home() {
         padding: '40px 24px',
         zIndex: 2
       }}>
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '12px',
+          marginBottom: '24px',
+          width: '100%'
+        }}>
+          <ThemeToggle />
+          <span style={{ color: 'var(--text-primary)', fontWeight: 600 }}>Theme</span>
+        </div>
         <CountrySearch />
         <button
           style={{
@@ -45,7 +56,7 @@ export default function Home() {
             padding: '14px 18px',
             borderRadius: 14,
             border: 'none',
-            background: 'linear-gradient(90deg, #ffb6ea 0%, #b6eaff 100%)',
+            background: 'var(--gradient-accent)',
             color: '#2d0b4e',
             fontWeight: 700,
             fontSize: '1.1rem',
@@ -59,7 +70,7 @@ export default function Home() {
           Country Statistics
         </button>
         <h1 style={{
-          background: 'linear-gradient(90deg, #ffb6ea 0%, #b6eaff 100%)',
+          background: 'var(--gradient-accent)',
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
           fontSize: '2.5rem',
@@ -77,18 +88,18 @@ export default function Home() {
                 padding: '18px 24px',
                 fontSize: '1.1rem',
                 borderRadius: '18px',
-                border: '1.5px solid #b6eaff',
-                background: 'rgba(44, 20, 80, 0.85)',
-                color: '#fff',
+                border: '1.5px solid var(--accent-primary)',
+                background: 'var(--card-bg)',
+                color: 'var(--text-primary)',
                 fontWeight: 600,
                 cursor: 'pointer',
-                boxShadow: '0 2px 16px #b6eaff33',
+                boxShadow: '0 2px 16px var(--accent-primary)33',
                 minWidth: 160,
                 transition: 'background 0.2s, box-shadow 0.2s',
                 outline: 'none',
               }}
-              onMouseOver={e => e.currentTarget.style.background = 'rgba(182,234,255,0.15)'}
-              onMouseOut={e => e.currentTarget.style.background = 'rgba(44, 20, 80, 0.85)'}
+              onMouseOver={e => e.currentTarget.style.background = 'var(--button-hover)'}
+              onMouseOut={e => e.currentTarget.style.background = 'var(--card-bg)'}
               onClick={() => navigate(`/continent/${encodeURIComponent(cont.name)}`)}
             >
               {cont.name}

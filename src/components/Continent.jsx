@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
+import ThemeToggle from './ThemeToggle'
 
 export default function Continent() {
   const { continentName } = useParams();
@@ -37,7 +38,7 @@ export default function Continent() {
       width: '100vw',
       height: '100vh',
       minHeight: '100vh',
-      background: 'linear-gradient(135deg, #2d0b4e 0%, #1a1446 100%)',
+      background: 'var(--gradient-primary)',
       padding: 0,
       margin: 0,
       display: 'flex',
@@ -48,11 +49,25 @@ export default function Continent() {
       boxSizing: 'border-box'
     }}>
       <div style={{position:'absolute', left: 24, top: 24, display:'flex', gap:'12px'}}>
-        <button onClick={() => navigate('/')} style={{fontSize:16, padding:'8px 16px', borderRadius:12, border:'none', background:'linear-gradient(90deg, #ffb6ea 0%, #b6eaff 100%)', color:'#2d0b4e', fontWeight:700, cursor:'pointer', boxShadow:'0 2px 16px #ffb6ea55'}}>Go to Home</button>
+        <div style={{display:'flex', alignItems:'center', gap:'12px'}}>
+          <ThemeToggle />
+          <span style={{color:'var(--text-primary)', fontWeight:600}}>Theme</span>
+        </div>
+        <button onClick={() => navigate('/')} style={{
+          fontSize:16,
+          padding:'8px 16px',
+          borderRadius:12,
+          border:'none',
+          background:'var(--gradient-accent)',
+          color:'#2d0b4e',
+          fontWeight:700,
+          cursor:'pointer',
+          boxShadow:'0 2px 16px #ffb6ea55'
+        }}>Go to Home</button>
       </div>
       <h2 style={{
-        color:'linear-gradient(90deg, #ffb6ea 0%, #b6eaff 100%)',
-        background: 'linear-gradient(90deg, #ffb6ea 0%, #b6eaff 100%)',
+        color:'var(--text-primary)',
+        background: 'var(--gradient-accent)',
         WebkitBackgroundClip: 'text',
         WebkitTextFillColor: 'transparent',
         margin:'32px 0 24px 0',
@@ -61,7 +76,7 @@ export default function Continent() {
         fontWeight: 700,
         letterSpacing: 1
       }}>Countries in {continentName}</h2>
-      {loading && <p style={{color:'#fff'}}>Loading...</p>}
+      {loading && <p style={{color:'var(--text-primary)'}}>Loading...</p>}
       {error && <p style={{color:'red'}}>{error}</p>}
       <div style={{
         display: 'flex',
@@ -84,18 +99,18 @@ export default function Continent() {
               padding: '18px 24px',
               fontSize: '1.1rem',
               borderRadius: '18px',
-              border: '1.5px solid #b6eaff',
-              background: 'rgba(44, 20, 80, 0.85)',
-              color: '#fff',
+              border: '1.5px solid var(--accent-primary)',
+              background: 'var(--card-bg)',
+              color: 'var(--text-primary)',
               fontWeight: 600,
               cursor: 'pointer',
-              boxShadow: '0 2px 16px #b6eaff33',
+              boxShadow: '0 2px 16px var(--accent-primary)33',
               minWidth: 160,
               transition: 'background 0.2s, box-shadow 0.2s',
               outline: 'none',
             }}
-            onMouseOver={e => e.currentTarget.style.background = 'rgba(182,234,255,0.15)'}
-            onMouseOut={e => e.currentTarget.style.background = 'rgba(44, 20, 80, 0.85)'}
+            onMouseOver={e => e.currentTarget.style.background = 'var(--button-hover)'}
+            onMouseOut={e => e.currentTarget.style.background = 'var(--card-bg)'}
           >
             <img src={country.flags?.svg || country.flags?.png} alt={country.name.common + ' flag'} style={{width:32, height:20, objectFit:'cover', borderRadius:4, boxShadow:'0 1px 4px #0004'}} />
             {country.name.common}

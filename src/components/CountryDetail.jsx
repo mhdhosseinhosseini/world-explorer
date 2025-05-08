@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
+import ThemeToggle from './ThemeToggle'
 
 export default function CountryDetail() {
   const { countryCode } = useParams();
@@ -32,9 +33,9 @@ export default function CountryDetail() {
       });
   }, [countryCode]);
 
-  if (loading) return <div style={{color:'#fff', padding:40}}>Loading...</div>;
+  if (loading) return <div style={{color:'var(--text-primary)', padding:40}}>Loading...</div>;
   if (error) return <div style={{color:'red', padding:40}}>{error}</div>;
-  if (!country) return <div style={{color:'#fff', padding:40}}>No data found.</div>;
+  if (!country) return <div style={{color:'var(--text-primary)', padding:40}}>No data found.</div>;
 
   const {
     name,
@@ -63,8 +64,8 @@ export default function CountryDetail() {
       width: '100vw',
       height: '100vh',
       minHeight: '100vh',
-      background: 'radial-gradient(circle at center, #000010 0%, #000033 100%)',
-      color: '#fff',
+      background: 'var(--gradient-primary)',
+      color: 'var(--text-primary)',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
@@ -74,12 +75,16 @@ export default function CountryDetail() {
       padding: '40px 0'
     }}>
       <div style={{position:'absolute', left: 24, top: 24, display:'flex', gap:'12px'}}>
+        <div style={{display:'flex', alignItems:'center', gap:'12px'}}>
+          <ThemeToggle />
+          <span style={{color:'var(--text-primary)', fontWeight:600}}>Theme</span>
+        </div>
         <button onClick={() => navigate('/')} style={{
           fontSize:16,
           padding:'8px 16px',
           borderRadius:12,
           border:'none',
-          background:'linear-gradient(90deg, #ffb6ea 0%, #b6eaff 100%)',
+          background:'var(--gradient-accent)',
           color:'#2d0b4e',
           fontWeight:700,
           cursor:'pointer',
@@ -92,7 +97,7 @@ export default function CountryDetail() {
           padding:'8px 16px',
           borderRadius:12,
           border:'none',
-          background:'linear-gradient(90deg, #ffb6ea 0%, #b6eaff 100%)',
+          background:'var(--gradient-accent)',
           color:'#2d0b4e',
           fontWeight:700,
           cursor:'pointer',
@@ -105,20 +110,20 @@ export default function CountryDetail() {
           padding:'8px 16px',
           borderRadius:12,
           border:'none',
-          background:'linear-gradient(90deg, #ffb6ea 0%, #b6eaff 100%)',
+          background:'var(--gradient-accent)',
           color:'#2d0b4e',
           fontWeight:700,
           cursor:'pointer',
           boxShadow:'0 2px 16px #ffb6ea55',
           transition:'background 0.2s, box-shadow 0.2s',
           outline:'none'
-        }}>Back</button>
+        }}>Go Back</button>
       </div>
       <h2 style={{marginTop: 0, marginBottom: 24, fontSize: '2.5rem', fontWeight: 700}}>{name.common}</h2>
       <img src={flags?.svg || flags?.png} alt={name.common + ' flag'} style={{width:120, height:80, objectFit:'cover', borderRadius:6, boxShadow:'0 2px 8px #0008', marginBottom: 24}} />
       <div style={{display:'flex', flexWrap:'wrap', gap:'32px', justifyContent:'center', alignItems:'flex-start', maxWidth:900}}>
         <div style={{minWidth:320}}>
-          <table style={{width:'100%', color:'#fff', background:'rgba(0,0,0,0.2)', borderRadius:8, borderCollapse:'collapse', fontSize:'1.1rem'}}>
+          <table style={{width:'100%', color:'var(--text-primary)', background:'var(--card-bg)', borderRadius:8, borderCollapse:'collapse', fontSize:'1.1rem'}}>
             <tbody>
               <tr><td style={{fontWeight:600, padding:'8px'}}>Population</td><td style={{padding:'8px'}}>{population?.toLocaleString()}</td></tr>
               <tr><td style={{fontWeight:600, padding:'8px'}}>Capital</td><td style={{padding:'8px'}}>{capital?.join(', ')}</td></tr>
@@ -130,29 +135,24 @@ export default function CountryDetail() {
             </tbody>
           </table>
         </div>
-        <div style={{minWidth:320}}>
-          <p><strong>Map:</strong></p>
-          {latlng && latlng.length === 2 && (
+        {maps?.googleMaps && (
+          <div style={{minWidth:320}}>
+            <h3 style={{color:'var(--accent-primary)', marginBottom:16}}>Map</h3>
             <iframe
-              title="map"
-              width="320"
-              height="200"
-              style={{borderRadius:8, border:'none', boxShadow:'0 2px 8px #0008'}}
-              src={`https://www.openstreetmap.org/export/embed.html?bbox=${latlng[1]-2}%2C${latlng[0]-2}%2C${latlng[1]+2}%2C${latlng[0]+2}&layer=mapnik&marker=${latlng[0]}%2C${latlng[1]}`}
+              src={`https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=${latlng[0]},${latlng[1]}`}
+              width="100%"
+              height="300"
+              style={{border:0, borderRadius:8, boxShadow:'0 2px 8px #0008'}}
               allowFullScreen=""
               loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
             ></iframe>
-          )}
-          {maps?.googleMaps && (
-            <div style={{marginTop:8}}>
-              <a href={maps.googleMaps} target="_blank" rel="noopener noreferrer" style={{color:'#4fc3f7'}}>View on Google Maps</a>
-            </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
       {neighbors.length > 0 && (
         <div style={{marginTop:40, textAlign:'center'}}>
-          <h3 style={{color:'#4fc3f7', marginBottom:16}}>Neighboring Countries</h3>
+          <h3 style={{color:'var(--accent-primary)', marginBottom:16}}>Neighboring Countries</h3>
           <div style={{display:'flex', flexWrap:'wrap', gap:'14px', justifyContent:'center'}}>
             {neighbors.map(n => (
               <button
@@ -166,8 +166,8 @@ export default function CountryDetail() {
                   fontSize: '1rem',
                   borderRadius: '6px',
                   border: 'none',
-                  background: '#fff',
-                  color: '#222',
+                  background: 'var(--gradient-accent)',
+                  color: '#2d0b4e',
                   fontWeight: 600,
                   cursor: 'pointer',
                   boxShadow: '0 2px 8px #0004',

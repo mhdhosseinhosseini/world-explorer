@@ -12,6 +12,7 @@ import {
 } from 'chart.js';
 import { useNavigate } from 'react-router-dom';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import ThemeToggle from './ThemeToggle';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement, Title, Tooltip, Legend, ChartDataLabels);
 
@@ -231,8 +232,8 @@ export default function Statistics() {
       width: '100vw',
       height: '100vh',
       minHeight: '100vh',
-      background: 'linear-gradient(135deg, #2d0b4e 0%, #1a1446 100%)',
-      color: '#fff',
+      background: 'var(--gradient-primary)',
+      color: 'var(--text-primary)',
       display: 'flex',
       flexDirection: 'row',
       alignItems: 'flex-start',
@@ -244,23 +245,27 @@ export default function Statistics() {
       <div style={{
         minWidth: 260,
         maxWidth: 280,
-        background: 'rgba(10,20,40,0.7)',
+        background: 'var(--sidebar-bg)',
         padding: '32px 18px 24px 18px',
         margin: '40px 0 0 24px',
         borderRadius: 18,
-        boxShadow: '0 2px 16px #b6eaff33',
+        boxShadow: '0 2px 16px var(--accent-primary)33',
         display: 'flex',
         flexDirection: 'column',
         gap: 18,
         alignItems: 'flex-start',
         zIndex: 2
       }}>
+        <div style={{display:'flex', alignItems:'center', gap:'12px', width:'100%'}}>
+          <ThemeToggle />
+          <span style={{color:'var(--text-primary)', fontWeight:600}}>Theme</span>
+        </div>
         <button onClick={() => navigate('/')} style={{
           fontSize:16,
           padding:'10px 18px',
           borderRadius:12,
           border:'none',
-          background:'linear-gradient(90deg, #ffb6ea 0%, #b6eaff 100%)',
+          background:'var(--gradient-accent)',
           color:'#2d0b4e',
           fontWeight:700,
           cursor:'pointer',
@@ -268,12 +273,12 @@ export default function Statistics() {
           marginBottom: 12,
           width: '100%'
         }}>Go to Home</button>
-        <div style={{fontWeight:700, fontSize:18, marginBottom:8, color:'#b6eaff'}}>Continents</div>
-        <label style={{display:'flex', alignItems:'center', gap:8, fontWeight:600, color:'#fff'}}>
+        <div style={{fontWeight:700, fontSize:18, marginBottom:8, color:'var(--accent-primary)'}}>Continents</div>
+        <label style={{display:'flex', alignItems:'center', gap:8, fontWeight:600, color:'var(--text-primary)'}}>
           <input type="checkbox" checked={continents.length === CONTINENTS.length} onChange={e => handleContinentChange('All', e.target.checked)} disabled={report === 'pop-by-continent' || report === 'countries-by-continent'} /> All
         </label>
         {CONTINENTS.map(cont => (
-          <label key={cont} style={{display:'flex', alignItems:'center', gap:8, fontWeight:600, color:'#fff'}}>
+          <label key={cont} style={{display:'flex', alignItems:'center', gap:8, fontWeight:600, color:'var(--text-primary)'}}>
             <input
               type="checkbox"
               checked={continents.includes(cont)}
@@ -290,18 +295,18 @@ export default function Statistics() {
             padding:'8px 16px',
             borderRadius:12,
             border:'none',
-            background:'linear-gradient(90deg, #b6eaff 0%, #ffb6ea 100%)',
+            background:'var(--gradient-accent)',
             color:'#2d0b4e',
             fontWeight:700,
             cursor:'pointer',
-            boxShadow:'0 2px 16px #b6eaff55',
+            boxShadow:'0 2px 16px var(--accent-primary)55',
             outline:'none',
             marginBottom: 12
           }}>
             {REPORTS.map(r => <option key={r.value} value={r.value}>{r.label}</option>)}
           </select>
           <div style={{display: 'flex', alignItems: 'center', gap: 8, width: '100%'}}>
-            <label style={{color: '#fff', fontWeight: 600}}>Count:</label>
+            <label style={{color: 'var(--text-primary)', fontWeight: 600}}>Count:</label>
             <input
               type="number"
               min={2}
@@ -313,9 +318,9 @@ export default function Statistics() {
                 fontSize: 16,
                 padding: '8px 8px',
                 borderRadius: 12,
-                border: '1.5px solid #b6eaff',
-                background: 'rgba(44, 20, 80, 0.85)',
-                color: '#fff',
+                border: '1.5px solid var(--accent-primary)',
+                background: 'var(--card-bg)',
+                color: 'var(--text-primary)',
                 fontWeight: 700,
                 outline: 'none',
                 textAlign: 'center',
@@ -335,7 +340,7 @@ export default function Statistics() {
         justifyContent: 'flex-start'
       }}>
         <h2 style={{
-          background: 'linear-gradient(90deg, #ffb6ea 0%, #b6eaff 100%)',
+          background: 'var(--gradient-accent)',
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
           marginBottom: 32,
@@ -347,13 +352,13 @@ export default function Statistics() {
         {loading && <p>Loading...</p>}
         {data && (
           report === 'pop-by-continent' ? (
-            <div style={{width: '100%', maxWidth: 600, background:'rgba(44,20,80,0.85)', borderRadius: 18, boxShadow:'0 2px 16px #b6eaff33', padding: 24}}>
+            <div style={{width: '100%', maxWidth: 600, background:'var(--card-bg)', borderRadius: 18, boxShadow:'0 2px 16px var(--accent-primary)33', padding: 24}}>
               <Pie
                 data={data}
                 options={{
                   responsive: true,
                   plugins: {
-                    legend: { display: true, labels: { color: '#b6eaff', font: { weight: 600 } } },
+                    legend: { display: true, labels: { color: 'var(--accent-primary)', font: { weight: 600 } } },
                     title: { display: false },
                     tooltip: { callbacks: { label: ctx => `${ctx.label}: ${ctx.parsed.toLocaleString()}` } },
                     datalabels: { display: false },
@@ -362,17 +367,17 @@ export default function Statistics() {
               />
             </div>
           ) : report === 'countries-by-continent' ? (
-            <div style={{width: '100%', maxWidth: 600, background:'rgba(44,20,80,0.85)', borderRadius: 18, boxShadow:'0 2px 16px #b6eaff33', padding: 24}}>
+            <div style={{width: '100%', maxWidth: 600, background:'var(--card-bg)', borderRadius: 18, boxShadow:'0 2px 16px var(--accent-primary)33', padding: 24}}>
               <Pie
                 data={data}
                 options={{
                   responsive: true,
                   plugins: {
-                    legend: { display: true, labels: { color: '#b6eaff', font: { weight: 600 } } },
+                    legend: { display: true, labels: { color: 'var(--accent-primary)', font: { weight: 600 } } },
                     title: { display: false },
                     tooltip: { callbacks: { label: ctx => `${ctx.label}: ${ctx.parsed.toLocaleString()}` } },
                     datalabels: {
-                      color: '#fff',
+                      color: 'var(--text-primary)',
                       font: { weight: 'bold', size: 28 },
                       formatter: (value) => value,
                     },
@@ -382,7 +387,7 @@ export default function Statistics() {
               />
             </div>
           ) : (
-            <div style={{width: '100%', maxWidth: 800, background:'rgba(44,20,80,0.85)', borderRadius: 18, boxShadow:'0 2px 16px #b6eaff33', padding: 24}}>
+            <div style={{width: '100%', maxWidth: 800, background:'var(--card-bg)', borderRadius: 18, boxShadow:'0 2px 16px var(--accent-primary)33', padding: 24}}>
               <Bar
                 data={data}
                 options={{
@@ -395,12 +400,12 @@ export default function Statistics() {
                   },
                   scales: {
                     x: {
-                      ticks: { color: '#b6eaff', font: { weight: 600 } },
-                      grid: { color: '#b6eaff22' }
+                      ticks: { color: 'var(--accent-primary)', font: { weight: 600 } },
+                      grid: { color: 'var(--accent-primary)22' }
                     },
                     y: {
-                      ticks: { color: '#b6eaff', font: { weight: 600 } },
-                      grid: { color: '#b6eaff22' }
+                      ticks: { color: 'var(--accent-primary)', font: { weight: 600 } },
+                      grid: { color: 'var(--accent-primary)22' }
                     }
                   }
                 }}
